@@ -1,41 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { playHuman, playAi } from '../store/playSlice';
+import { recurrent } from 'brain.js';
 
 const Game = () => {
     const dispatch = useDispatch();
     const state = useSelector((state) => state.play);
+    const [loading, setLoading] = useState(false);
 
     console.log(state);
 
     const buttonHandler = (e) => {
         e.preventDefault();
-        dispatch(playHuman(e.target.value));
-        dispatch(playAi());
+        setLoading(true);
+        setTimeout(() => {
+            dispatch(playHuman(e.target.value));
+            dispatch(playAi());
+            setLoading(false);
+        }, 0)
     }
 
-    const Result = (res) => {
-        if (res) {
-            if (res < 0) {
-                return ("Human won!");
-            }
-            else return ("AI won!");
-        } else return ("Tie!");
+    const ResultOutput = (res) => {
+        if (res === 0) {
+            return ("Tie!")
+        }
+        else if (res < 0) {
+            return ("Human won!");
+        }
+        else return ("AI won!");
     }
 
     const decodeOption = (x) => {
-        if(x) {
-            switch(x) {
+        if (x) {
+            switch (x) {
                 case '1':
-                    return("Rock");
+                    return ("Rock 🪨");
                 case '2':
-                    return("Paper");
+                    return ("Paper 📃");
                 case '3':
-                    return("Scissors");
+                    return ("Scissors ✂️");
+                default:
+                    return ("Waiting...")
             }
         } else {
-            return("No option selected!")
+            return ("Waiting")
         }
     }
 
@@ -44,9 +53,21 @@ const Game = () => {
             <div>
                 <p>Human move: {decodeOption(state.human)}</p>
                 <p>AI move: {decodeOption(state.ai)}</p>
-                Result: {Result(state.history.at(-1))}
+                Result: {ResultOutput(state.result)}
             </div>
         )
+    }
+
+    const Ai = () => {
+
+        // const net = new recurrent.LSTMTimeStep();
+        // net.train([[1, 2, 3, 1, 2, 3, 1]]);
+        // const output = net.run([1, 2, 3, 1]); // 3
+
+        const net = new recurrent.LSTMTimeStep();
+        net.train([state.history]);
+        const output = net.run([...state.history]); // 3
+        return (Math.round(output))
     }
 
     return (
@@ -64,7 +85,12 @@ const Game = () => {
                 Scissor
             </Button>
 
-            <Output />
+
+            {loading ? (
+                <div className="progress mt-3">
+                    <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style={{ width: '100%' }}></div>
+                </div>
+            ) : <Output />}
 
         </div>
     )
