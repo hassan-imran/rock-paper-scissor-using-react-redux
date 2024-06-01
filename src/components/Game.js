@@ -2,23 +2,26 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { playHuman, playAi } from '../store/playSlice';
-import { recurrent } from 'brain.js';
+import Table from 'react-bootstrap/Table';
 
 const Game = () => {
     const dispatch = useDispatch();
-    const state = useSelector((state) => state.play);
+    const { human, ai, result, huScore, aiScore, tScore, history } = useSelector((state) => state.play);
     const [loading, setLoading] = useState(false);
 
-    console.log(state);
+    console.log(human, ai, result, history);
 
-    const buttonHandler = (e) => {
+    const buttonHandler = async (e) => {
         e.preventDefault();
+
         setLoading(true);
         setTimeout(() => {
-            dispatch(playHuman(e.target.value));
+            
+            dispatch(playHuman(parseInt(e.target.value)));
             dispatch(playAi());
             setLoading(false);
-        }, 0)
+        }, 500)
+
     }
 
     const ResultOutput = (res) => {
@@ -34,11 +37,11 @@ const Game = () => {
     const decodeOption = (x) => {
         if (x) {
             switch (x) {
-                case '1':
+                case 1:
                     return ("Rock 🪨");
-                case '2':
+                case 2:
                     return ("Paper 📃");
-                case '3':
+                case 3:
                     return ("Scissors ✂️");
                 default:
                     return ("Waiting...")
@@ -51,37 +54,43 @@ const Game = () => {
     const Output = () => {
         return (
             <div>
-                <p>Human move: {decodeOption(state.human)}</p>
-                <p>AI move: {decodeOption(state.ai)}</p>
-                Result: {ResultOutput(state.result)}
+                <p>Human move: {decodeOption(human)}</p>
+                <p>AI move: {decodeOption(ai)}</p>
+                <p>Result: {ResultOutput(result)}</p>
+
+                <Table striped bordered hover className='text-center mx-auto' style={{ width: '40%' }}>
+                    <thead>
+                        <tr>
+                            <th>Human Wins</th>
+                            <th>Ties</th>
+                            <th>AI Wins</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{huScore}</td>
+                            <td>{tScore}</td>
+                            <td>{aiScore}</td>
+                        </tr>
+                    </tbody>
+                </Table>
+
             </div>
         )
-    }
-
-    const Ai = () => {
-
-        // const net = new recurrent.LSTMTimeStep();
-        // net.train([[1, 2, 3, 1, 2, 3, 1]]);
-        // const output = net.run([1, 2, 3, 1]); // 3
-
-        const net = new recurrent.LSTMTimeStep();
-        net.train([state.history]);
-        const output = net.run([...state.history]); // 3
-        return (Math.round(output))
     }
 
     return (
         <div>
 
-            <Button variant='primary' value={'1'} onClick={(e) => buttonHandler(e)}>
+            <Button variant='primary' value={1} onClick={(e) => buttonHandler(e)} disabled={loading}>
                 Rock
             </Button>
 
-            <Button variant='success' value={'2'} onClick={(e) => buttonHandler(e)}>
+            <Button variant='success' value={2} onClick={(e) => buttonHandler(e)} disabled={loading}>
                 Paper
             </Button>
 
-            <Button variant='danger' value={'3'} onClick={(e) => buttonHandler(e)}>
+            <Button variant='danger' value={3} onClick={(e) => buttonHandler(e)} disabled={loading}>
                 Scissor
             </Button>
 
