@@ -16,7 +16,7 @@ const Game = () => {
 
         setLoading(true);
         setTimeout(() => {
-            
+
             dispatch(playHuman(parseInt(e.target.value)));
             dispatch(playAi());
             setLoading(false);
@@ -58,12 +58,13 @@ const Game = () => {
                 <p>AI move: {decodeOption(ai)}</p>
                 <p>Result: {ResultOutput(result)}</p>
 
-                <Table striped bordered hover className='text-center mx-auto' style={{ width: '40%' }}>
+
+                <Table striped bordered hover className='text-center'>
                     <thead>
                         <tr>
-                            <th>Human Wins</th>
+                            <th>🙋‍♂️ (Human)</th>
                             <th>Ties</th>
-                            <th>AI Wins</th>
+                            <th>🤖 (AI)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,25 +82,29 @@ const Game = () => {
 
     return (
         <div>
+            <div className="d-grid gap-2 col-5 mx-auto">
 
-            <Button variant='primary' value={1} onClick={(e) => buttonHandler(e)} disabled={loading}>
-                Rock
-            </Button>
+                <Button variant='dark' size='lg' value={1} onClick={(e) => buttonHandler(e)} disabled={loading}>
+                    Rock 🪨
+                </Button>
 
-            <Button variant='success' value={2} onClick={(e) => buttonHandler(e)} disabled={loading}>
-                Paper
-            </Button>
+                <Button variant='dark' size='lg' value={2} onClick={(e) => buttonHandler(e)} disabled={loading}>
+                    Paper 📃
+                </Button>
 
-            <Button variant='danger' value={3} onClick={(e) => buttonHandler(e)} disabled={loading}>
-                Scissor
-            </Button>
+                <Button variant='dark' size='lg' value={3} onClick={(e) => buttonHandler(e)} disabled={loading}>
+                    Scissor ✂️
+                </Button>
+
+                {loading ? (
+                    <div className="progress mt-3">
+                        <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style={{ width: '100%' }}></div>
+                    </div>
+                ) : <Output />}
+
+            </div>
 
 
-            {loading ? (
-                <div className="progress mt-3">
-                    <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style={{ width: '100%' }}></div>
-                </div>
-            ) : <Output />}
 
         </div>
     )
