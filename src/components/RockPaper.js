@@ -30,7 +30,7 @@ const RockPaper = () => {
         "If you put so much effort in other parts of your life, you wouldn't be fighting a computer in a game.. lmfao 😂😂"
     ]
 
-    console.log(human, ai, result, history);
+    // console.log(human, ai, result, history);
 
     const buttonHandler = async (e) => {
         e.preventDefault();

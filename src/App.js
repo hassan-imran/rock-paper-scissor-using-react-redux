@@ -4,10 +4,7 @@ function App() {
 
   return (
     <div className="App text-center">
-      
-
       <RockPaper />
-
     </div>
   );
 }
