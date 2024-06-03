@@ -6,12 +6,42 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import TopNav from './components/TopNav';
+import NotFound from './components/NotFound';
+import About from './components/About';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <>
+        <TopNav />
+        <App />
+      </>
+    ),
+    errorElement: (<NotFound />)
+  }, {
+    path: "/about",
+    element: (
+      <>
+        <TopNav />
+        <About />
+      </>
+    ),
+    errorElement: (<NotFound />)
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-      <App />
+      <RouterProvider router={router} />
+      {/* <App /> */}
     </React.StrictMode>
   </Provider>
 );

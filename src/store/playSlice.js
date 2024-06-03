@@ -7,7 +7,7 @@ const initialState = {
     huScore: 0,
     aiScore: 0,
     tScore: 0,
-    result: 0,
+    result: -2,
     history: [1, 1], // hydrating the array with some initial values so that the LSTM can build on it
 };
 
