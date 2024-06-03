@@ -1,3 +1,7 @@
+Live Project
+============
+Follow this [link](https://rock-paper-hassan.vercel.app/) to try the app in real-time.
+
 About
 =====
 Outplay Ai is simply a forecasting (time-series predicting) Machine Learning model on React.  
@@ -19,6 +23,8 @@ The app is built using:
 
 Screenshots
 ===========
-![image](https://github.com/hassan-imran/rock-paper-scissor-using-react-redux/assets/43490649/a54f9995-3a3f-42c4-8aaf-11fca9da6dfd)
-![image](https://github.com/hassan-imran/rock-paper-scissor-using-react-redux/assets/43490649/5b643d3c-2f27-40a3-9dcc-7554c2ab131e)
+![image](https://github.com/hassan-imran/rock-paper-scissor-using-react-redux/assets/43490649/42bbaeeb-5691-42c6-b8f4-f4afec3b4e5d)
+
+![image](https://github.com/hassan-imran/rock-paper-scissor-using-react-redux/assets/43490649/1d0830e9-0900-4629-b9c6-e0a1513c6f64)
+
 ![image](https://github.com/hassan-imran/rock-paper-scissor-using-react-redux/assets/43490649/3c8c4cf4-84e1-4527-a97c-daf7ec337118)
