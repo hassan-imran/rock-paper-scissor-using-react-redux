@@ -23,6 +23,12 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "build": {
+    "env": {
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    },
+    "installCommand": "bash install-deps.sh && npm install"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
