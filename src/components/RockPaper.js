@@ -9,6 +9,7 @@ const RockPaper = () => {
     const dispatch = useDispatch();
     const { human, ai, result, huScore, aiScore, tScore, history } = useSelector((state) => state.play);
     const [loading, setLoading] = useState(false);
+
     const winningResponses = [
         "Maybe try a little harder next time! 😏",
         "Are you even putting in any effort? 💅",
@@ -30,8 +31,6 @@ const RockPaper = () => {
         "If you put so much effort in other parts of your life, you wouldn't be fighting a computer in a game.. lmfao 😂😂"
     ]
 
-    // console.log(human, ai, result, history);
-
     const buttonHandler = async (e) => {
         e.preventDefault();
 
@@ -42,7 +41,6 @@ const RockPaper = () => {
             dispatch(playAi());
             setLoading(false);
         }, 500)
-
     }
 
     const ResultOutput = (res) => {
@@ -63,16 +61,51 @@ const RockPaper = () => {
         if (x) {
             switch (x) {
                 case 1:
-                    return ("Rock 🪨");
+                    return (
+                        <Card className='col-4'>
+                            <Card.Body>
+                                <Card.Title className='display-6'>🪨</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">Rock</Card.Subtitle>
+                            </Card.Body>
+                        </Card>
+                    )
                 case 2:
-                    return ("Paper 📃");
+                    return (
+                        <Card className='col-4'>
+                            <Card.Body>
+                                <Card.Title className='display-6'>📃</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">Paper</Card.Subtitle>
+                            </Card.Body>
+                        </Card>
+                    )
                 case 3:
-                    return ("Scissors ✂️");
+                    return (
+                        <Card className='col-4'>
+                            <Card.Body>
+                                <Card.Title className='display-6'>✂️</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">Scissors</Card.Subtitle>
+                            </Card.Body>
+                        </Card>
+                    )
                 default:
-                    return ("Waiting...")
+                    return (
+                        <Card className='col-4'>
+                            <Card.Body>
+                                <Card.Title className='display-6'>⌛</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">Waiting for the first move..</Card.Subtitle>
+                            </Card.Body>
+                        </Card>
+                    )
             }
         } else {
-            return ("Waiting")
+            return (
+                <Card className='col-4'>
+                    <Card.Body>
+                        <Card.Title className='display-6'>⌛</Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">Waiting for the first move..</Card.Subtitle>
+                    </Card.Body>
+                </Card>
+            )
         }
     }
 
@@ -95,6 +128,16 @@ const RockPaper = () => {
         return (
             <div>
 
+                <div className='d-flex justify-content-between my-3 align-items-center'>
+                    {decodeOption(human)}
+                    <h4 className='display-6'>VS</h4>
+                    {decodeOption(ai)}
+                </div>
+
+                <Card bg={'primary'} text='white' className='p-2 '>
+                    <Card.Title><span className=''>{ResultOutput(result)}</span></Card.Title>
+                    <Card.Text>{genResponse(result)}</Card.Text>
+                </Card>
 
                 <Table striped bordered hover className='text-center mt-3'>
                     <thead>
@@ -107,13 +150,6 @@ const RockPaper = () => {
                     </thead>
                     <tbody>
                         <tr>
-                            <th>Moves</th>
-                            <td>{decodeOption(human)}</td>
-                            <td></td>
-                            <td>{decodeOption(ai)}</td>
-                            {/* <td>{ResultOutput(result)}</td> */}
-                        </tr>
-                        <tr>
                             <th>Scores</th>
                             <td>{huScore}</td>
                             <td>{tScore}</td>
@@ -121,11 +157,6 @@ const RockPaper = () => {
                         </tr>
                     </tbody>
                 </Table>
-
-                <Card bg={'primary'} text='white' className='p-2 '>
-                    <Card.Title><span className=''>{ResultOutput(result)}</span></Card.Title>
-                    <Card.Text>{genResponse(result)}</Card.Text>
-                </Card>
 
             </div>
         )

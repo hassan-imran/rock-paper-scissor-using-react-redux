@@ -17,19 +17,14 @@ export const playSlice = createSlice({
     reducers: {
         playHuman: (state, action) => {
             state.human = action.payload;
-            console.log(state.human)
         },
         playAi: (state) => {
             if (state.human) {
-                // state.ai = (Math.round(Math.random() * 2) + 1).toString();
-                // state.ai = action.payload;
 
                 const net = new recurrent.LSTMTimeStep();
                 const trainWindow = state.history.slice(-10);
-                // const trainWindow = state.history;
                 net.train([trainWindow]);
                 const output = Math.round(net.run([...trainWindow]));
-                // return(Math.round(output))
 
                 if (output === 1) {
                     state.ai = 2;
