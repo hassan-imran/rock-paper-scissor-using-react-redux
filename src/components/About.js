@@ -13,6 +13,11 @@ const About = () => {
           <p><span className='fw-bold'>Outplay Ai</span> is simply a forecasting (time-series predicting) Machine Learning model on React.
           <br/>
           <br/>
+
+          Currently it's just Rock, Paper, Scissors. Please do suggest any other games that you might want to see.
+
+          <br/>
+          <br/>
           It trains on a dataset of your recentmost 10 moves. The first move is always paper since that is how I've initialized the training set.
           
           </p>
